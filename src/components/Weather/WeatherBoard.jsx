@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import AddToFavourite from "./AddToFavourite";
 import WeatherCondition from "./WeatherCondition";
 import WeatherHeadline from "./WeatherHeadline";
+import { WeatherContext } from "../../context";
 
 
 const WeatherBoard = () => {
+    const { weatherData, loading } = useContext(WeatherContext);
+    console.log(weatherData, loading);
+    
     return (
         <div className="container">
             <div
