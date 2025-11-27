@@ -1,4 +1,5 @@
 import useWeather from "../../hooks/useWeather";
+import { getFormattedDate } from "../../utils/date-utils";
 import PinIcon from "./../../assets/pin.svg";
 
 const WeatherHeadline = () => {
@@ -12,7 +13,7 @@ const WeatherHeadline = () => {
 
                 <div className="max-md:flex items-center max-md:space-x-4">
                     <h1 className="text-[60px] lg:text-[80px] xl:text-[100px] leading-none md:mb-4">
-                        {temperature ?? "--"}
+                        {Math.round(temperature) ?? "--"}°
                     </h1>
 
                     <div className="flex items-center space-x-4 md:mb-4">
@@ -25,7 +26,8 @@ const WeatherHeadline = () => {
             </div>
 
             <p className="text-sm lg:text-lg">
-                {time ? new Date(time * 1000).toLocaleString() : "--"}
+                {getFormattedDate(time, "time", false)} -{" "}
+                {getFormattedDate(time, "date", false)}
             </p>
         </div>
     );
