@@ -6,7 +6,7 @@ const getFormattedDate = (value, type, inMS) => {
     }
 
     const date = new Date(value);
-    console.log("date", date);
+    // console.log("date", date);
 
     let option;
 
