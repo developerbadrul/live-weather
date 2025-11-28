@@ -1,15 +1,20 @@
 import useWeather from "../../hooks/useWeather";
 import { getFormattedDate } from "../../utils/date-utils";
 import PinIcon from "./../../assets/pin.svg";
+import ClimateDynamicIcon from "./ClimateDynamicIcon";
+
+
 
 const WeatherHeadline = () => {
     const { weatherData } = useWeather();
     const { climate, location, temperature, time } = weatherData;
 
+
+
     return (
         <div>
             <div className="max-md:flex items-center justify-between md:-mt-10">
-                <img src="./assets/cloud.svg" alt="cloud" />
+                <ClimateDynamicIcon climate={climate} />
 
                 <div className="max-md:flex items-center max-md:space-x-4">
                     <h1 className="text-[60px] lg:text-[80px] xl:text-[100px] leading-none md:mb-4">
