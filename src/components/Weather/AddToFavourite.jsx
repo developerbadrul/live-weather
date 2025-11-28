@@ -1,5 +1,12 @@
+import { useContext } from "react";
 import HeartIcon from "./../../assets/heart.svg"
+import { LocalStorageContext } from "../../context";
 const AddToFavourite = () => {
+    const {
+        favourite,
+        addToFavourites,
+        removeFromFavourites
+    } = useContext(LocalStorageContext)
     return (
         <div className="md:col-span-2">
             <div className="flex items-center justify-end space-x-6">
