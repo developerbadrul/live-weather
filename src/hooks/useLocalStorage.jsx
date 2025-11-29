@@ -6,6 +6,10 @@ const useLocalStorage = (storageKey, defaultValue) => {
     );
 
     useEffect(() => {
+        const cached = JSON.parse(localStorage.getItem(storageKey));
+
+        if (JSON.stringify(cached) === JSON.stringify(value)) return;
+
         localStorage.setItem(storageKey, JSON.stringify(value))
     }, [value, storageKey])
 
