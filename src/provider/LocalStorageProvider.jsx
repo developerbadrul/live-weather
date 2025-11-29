@@ -8,7 +8,7 @@ const LocalStorageProvider = ({ children }) => {
         setFavourite(prev => {
 
             const exists = prev.some(fav => fav.latitude === latitude && fav.longitude === longitude);
-            console.log(exists);
+            // console.log(exists);
 
             if (exists) return prev;
 

@@ -19,7 +19,6 @@ const AddToFavourite = () => {
             fav.latitude === latitude && fav.longitude === longitude
     )
 
-    console.log("fav", isFavourite)
 
     const handleToggleFavourite = () => {
         if (!latitude || !longitude) return;
