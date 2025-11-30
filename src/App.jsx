@@ -1,5 +1,5 @@
 import Home from './pages/Home'
-import { WeatherProvider } from './provider'
+import { LocationProvider, WeatherProvider } from './provider'
 import LocalStorageProvider from './provider/LocalStorageProvider'
 
 function App() {
@@ -7,7 +7,9 @@ function App() {
   return (
     <WeatherProvider>
       <LocalStorageProvider>
-        <Home />
+        {/* <LocationProvider> */}
+          <Home />
+        {/* </LocationProvider> */}
       </LocalStorageProvider>
     </WeatherProvider>
   )
