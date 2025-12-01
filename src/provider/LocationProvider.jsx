@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { LocalStorageContext } from "../context";
+import { LocationContex } from "../context";
+
 
 
 const LocationProvider = ({ children }) => {
@@ -9,9 +10,9 @@ const LocationProvider = ({ children }) => {
         longitude: 0,
     });
     return (
-        <LocalStorageContext.Provider value={{ selectedLocation, setSelectedLocation }}>
+        <LocationContex.Provider value={{ selectedLocation, setSelectedLocation }}>
             {children}
-        </LocalStorageContext.Provider>
+        </LocationContex.Provider>
     );
 };
 

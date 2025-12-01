@@ -4,4 +4,4 @@ const WeatherContext = createContext(null)
 const LocalStorageContext = createContext(null)
 const LocationContex = createContext(null)
 
-export { WeatherContext, LocalStorageContext }
+export { WeatherContext, LocalStorageContext, LocationContex }
