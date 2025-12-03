@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { WeatherContext } from "../context";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { LocationContex, WeatherContext } from "../context";
 
 const WeatherProvider = ({ children }) => {
     const [weatherData, setWeatherData] = useState({
@@ -17,6 +17,7 @@ const WeatherProvider = ({ children }) => {
     });
     const [loading, setLoading] = useState({ state: false, message: "" });
     const [error, setError] = useState(null);
+    const { selectedLocation } = useContext(LocationContex)
 
     const fetchWeatherData = useCallback(async (lat, lon) => {
         try {
@@ -36,8 +37,7 @@ const WeatherProvider = ({ children }) => {
 
             const data = await response.json()
 
-            setWeatherData((prev) => ({
-                ...prev,
+            setWeatherData({
                 location: data?.name,
                 climate: data?.weather[0]?.main,
                 temperature: data?.main?.temp,
@@ -49,7 +49,7 @@ const WeatherProvider = ({ children }) => {
                 time: data?.dt,
                 longitude: lon,
                 latitude: lat,
-            }));
+            });
 
 
         } catch (error) {
@@ -63,11 +63,22 @@ const WeatherProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
+        console.log('effect execute');
+        
         setLoading({ state: true, message: "Finding location..." });
-        navigator.geolocation.getCurrentPosition((position) => {
-            fetchWeatherData(position.coords.latitude, position.coords.longitude);
-        })
-    }, [fetchWeatherData])
+        if (selectedLocation.latitude && selectedLocation.longitude) {
+            // console.log(selectedLocation.location, "Current Location"); 
+            
+            fetchWeatherData(
+                selectedLocation.latitude,
+                selectedLocation.longitude
+            );
+        } else {
+            navigator.geolocation.getCurrentPosition((position) => {
+                fetchWeatherData(position.coords.latitude, position.coords.longitude);
+            })
+        }
+    }, [selectedLocation.latitude, selectedLocation.longitude, fetchWeatherData])
 
     return (
         <WeatherContext.Provider value={{ weatherData, loading, error }}>

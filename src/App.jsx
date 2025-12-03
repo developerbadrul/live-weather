@@ -5,13 +5,13 @@ import LocalStorageProvider from './provider/LocalStorageProvider'
 function App() {
 
   return (
-    <WeatherProvider>
-      <LocalStorageProvider>   {/* correct */}
-        <LocationProvider>
+    <LocationProvider>
+      <WeatherProvider>
+        <LocalStorageProvider>
           <Home />
-        </LocationProvider>
-      </LocalStorageProvider>
-    </WeatherProvider>
+        </LocalStorageProvider>
+      </WeatherProvider>
+    </LocationProvider>
   )
 }
 
