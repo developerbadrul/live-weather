@@ -1,12 +1,17 @@
 import Home from './pages/Home'
-import { WeatherProvider } from './provider'
+import { LocationProvider, WeatherProvider } from './provider'
+import LocalStorageProvider from './provider/LocalStorageProvider'
 
 function App() {
 
   return (
-    <WeatherProvider>
-      <Home />
-    </WeatherProvider>
+    <LocationProvider>
+      <LocalStorageProvider>
+        <WeatherProvider>
+          <Home />
+        </WeatherProvider>
+      </LocalStorageProvider>
+    </LocationProvider>
   )
 }
 

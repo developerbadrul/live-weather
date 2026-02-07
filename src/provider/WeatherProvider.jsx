@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { WeatherContext } from "../context";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { LocationContex, WeatherContext } from "../context";
 
 const WeatherProvider = ({ children }) => {
     const [weatherData, setWeatherData] = useState({
@@ -17,6 +17,7 @@ const WeatherProvider = ({ children }) => {
     });
     const [loading, setLoading] = useState({ state: false, message: "" });
     const [error, setError] = useState(null);
+    const { selectedLocation } = useContext(LocationContex)
 
     const fetchWeatherData = useCallback(async (lat, lon) => {
         try {
@@ -36,8 +37,7 @@ const WeatherProvider = ({ children }) => {
 
             const data = await response.json()
 
-            setWeatherData((prev) => ({
-                ...prev,
+            setWeatherData({
                 location: data?.name,
                 climate: data?.weather[0]?.main,
                 temperature: data?.main?.temp,
@@ -49,7 +49,7 @@ const WeatherProvider = ({ children }) => {
                 time: data?.dt,
                 longitude: lon,
                 latitude: lat,
-            }));
+            });
 
 
         } catch (error) {
@@ -62,15 +62,43 @@ const WeatherProvider = ({ children }) => {
         }
     }, [])
 
-    useEffect(() => {
-        setLoading({ state: true, message: "Finding location..." });
-        navigator.geolocation.getCurrentPosition((position) => {
-            fetchWeatherData(position.coords.latitude, position.coords.longitude);
-        })
+    const requestBrowserLocation = useCallback(() => {
+        setLoading({ state: true, message: "Requesting location..." });
+        setError(null);
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                fetchWeatherData(position.coords.latitude, position.coords.longitude);
+            },
+            (err) => {
+                if (err.code === err.PERMISSION_DENIED) {
+                    setError("Location permission denied. Please allow access.");
+                } else {
+                    setError("Unable to retrieve location.");
+                }
+                setLoading({ state: false, message: "" });
+            }
+        )
     }, [fetchWeatherData])
 
+    useEffect(() => {
+        console.log('effect execute');
+
+        setLoading({ state: true, message: "Finding location..." });
+        if (selectedLocation.latitude && selectedLocation.longitude) {
+            // console.log(selectedLocation.location, "Current Location"); 
+
+            fetchWeatherData(
+                selectedLocation.latitude,
+                selectedLocation.longitude
+            );
+        } else {
+            requestBrowserLocation()
+        }
+    }, [fetchWeatherData, requestBrowserLocation, selectedLocation.latitude, selectedLocation.longitude])
+
     return (
-        <WeatherContext.Provider value={{ weatherData, loading, error }}>
+        <WeatherContext.Provider value={{ weatherData, loading, error, requestBrowserLocation }}>
             {children}
         </WeatherContext.Provider>
     );
