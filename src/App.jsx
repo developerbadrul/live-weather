@@ -6,11 +6,11 @@ function App() {
 
   return (
     <LocationProvider>
-      <WeatherProvider>
-        <LocalStorageProvider>
+      <LocalStorageProvider>
+        <WeatherProvider>
           <Home />
-        </LocalStorageProvider>
-      </WeatherProvider>
+        </WeatherProvider>
+      </LocalStorageProvider>
     </LocationProvider>
   )
 }

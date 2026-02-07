@@ -49,7 +49,7 @@ const Home = () => {
         );
     }
 
-    // console.log(error);
+    console.log(error);
 
     if (error?.includes("permission")) {
         return (

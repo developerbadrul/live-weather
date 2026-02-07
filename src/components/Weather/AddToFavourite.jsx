@@ -3,12 +3,15 @@ import HeartIcon from "./../../assets/heart.svg";
 import RedHeartIcon from "./../../assets/heart-red.svg";
 import { LocalStorageContext } from "../../context";
 import useWeather from "../../hooks/useWeather";
+
 const AddToFavourite = () => {
     const {
         favourite,
         addToFavourites,
         removeFromFavourites
     } = useContext(LocalStorageContext)
+    console.log(favourite, addToFavourites, "from local stroage");
+    
 
     const { weatherData } = useWeather()
 
@@ -21,14 +24,16 @@ const AddToFavourite = () => {
 
 
     const handleToggleFavourite = () => {
+        console.log("toggle execute");
         if (!latitude || !longitude) return;
-
+        
         if (isFavourite) {
             removeFromFavourites(latitude, longitude);
         } else {
             addToFavourites(latitude, longitude, location)
         }
     }
+
     return (
         <div className="md:col-span-2">
             <div className="flex items-center justify-end space-x-6">
@@ -37,7 +42,7 @@ const AddToFavourite = () => {
                     onClick={handleToggleFavourite}
                 >
                     <span>Add to Favourite</span>
-                    <img src={isFavourite ? RedHeartIcon : HeartIcon} alt={isFavourite} />
+                    <img src={isFavourite ? RedHeartIcon : HeartIcon} alt={isFavourite ? "favourite" : "not favourite"} />
                 </button>
 
             </div>

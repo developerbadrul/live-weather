@@ -29,6 +29,11 @@ const data = [
         latitude: 43.6534817,
         longitude: -79.3839347,
     },
+    {
+        location: "Siberia",
+        latitude: 61.0137,
+        longitude: 99.1967,
+    },
 ];
 
 function getLocations() {

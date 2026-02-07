@@ -5,6 +5,8 @@ const LocalStorageProvider = ({ children }) => {
     const [favourite, setFavourite] = useLocalStorage('favourite', []);
 
     const addToFavourites = (latitude, longitude, location) => {
+        console.log(latitude, longitude, location, 'addToFavourites');
+        
         setFavourite(prev => {
 
             const exists = prev.some(fav => fav.latitude === latitude && fav.longitude === longitude);
